@@ -1,29 +1,27 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+# Azure DevOps Pipeline to Build a Docker Image using Default Agent Pool
 
 trigger:
-- main
+  - main  # Run pipeline on changes to 'main' branch
 
 resources:
-- repo: self
+  - repo: self  # Current repository
 
 variables:
-  tag: '$(Build.BuildId)'
+  tag: '$(Build.BuildId)'  # Tag image with build ID
 
 stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+  - stage: Build
+    displayName: "🚀 Build Docker Image"
+    jobs:
+      - job: BuildDockerImage
+        displayName: "🔧 Docker Build Job"
+        pool:
+          name: Default  # 👈 Use the default agent pool (must match the exact name in DevOps)
+        steps:
+          - task: Docker@2
+            displayName: "🐳 Build Docker Image"
+            inputs:
+              command: build
+              dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+              tags: |
+                $(tag)
