@@ -29,8 +29,7 @@ stages:
               containerRegistry: 'Dockerhub-registry'
               repository: 'jksoam007'
               command: 'build'
-              Dockerfile: 
-              buildContext: 
+              Dockerfile: '**/Dockerfile'
               tags: '$(tag)'
           - task: Docker@2
             inputs:
