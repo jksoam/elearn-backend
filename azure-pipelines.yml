@@ -27,13 +27,13 @@ stages:
             displayName: "🐳 Build Docker Image"
             inputs:
               containerRegistry: 'Dockerhub-registry'
-              repository: 'jksoam007'
+              repository: 'jksoam777/elearn-backend'
               command: 'build'
               Dockerfile: '**/Dockerfile'
               tags: '$(tag)'
           - task: Docker@2
             inputs:
               containerRegistry: 'Dockerhub-registry'
-              repository: 'jksoam007'
+              repository: 'jksoam777/elearn-backend'
               command: 'push'
               tags: '$(tag)'
