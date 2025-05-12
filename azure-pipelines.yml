@@ -8,8 +8,7 @@ resources:
 
 variables:
   tag: v1  # Tag image with build ID
-pool:
- vmImage: ubuntu:latest
+pool:default
 
 stages:
   - stage: Build
@@ -27,13 +26,13 @@ stages:
             displayName: "🐳 Build Docker Image"
             inputs:
               containerRegistry: 'Dockerhub-registry'
-              repository: 'jksoam777/elearn-backend'
+              repository: 'jksoam777/el-back'
               command: 'build'
               Dockerfile: '**/Dockerfile'
               tags: '$(tag)'
           - task: Docker@2
             inputs:
               containerRegistry: 'Dockerhub-registry'
-              repository: 'jksoam777/elearn-backend'
+              repository: 'jksoam777/el-back'
               command: 'push'
               tags: '$(tag)'
