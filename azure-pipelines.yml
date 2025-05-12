@@ -1,14 +1,16 @@
 # Azure DevOps Pipeline to Build a Docker Image using Default Agent Pool
 
 trigger:
-  - main  # Run pipeline on changes to 'main' branch
+  - none  # Run pipeline manually
 
 resources:
   - repo: self  # Current repository
 
 variables:
   tag: v1  # Tag image with build ID
-pool:default
+
+pool:
+  name: Default  # Use the default agent pool
 
 stages:
   - stage: Build
@@ -22,6 +24,7 @@ stages:
           - task: DockerInstaller@0
             inputs:
               dockerVersion: '17.09.0-ce'
+
           - task: Docker@2
             displayName: "🐳 Build Docker Image"
             inputs:
@@ -30,7 +33,9 @@ stages:
               command: 'build'
               Dockerfile: '**/Dockerfile'
               tags: '$(tag)'
+
           - task: Docker@2
+            displayName: "📤 Push Docker Image"
             inputs:
               containerRegistry: 'Dockerhub-registry'
               repository: 'jksoam777/el-back'
