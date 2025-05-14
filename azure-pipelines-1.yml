@@ -11,7 +11,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'Dockerhub-registry'
-    repository: 'ksoam777/backjk'
+    repository: 'jksoam777/backjk'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'v1'
