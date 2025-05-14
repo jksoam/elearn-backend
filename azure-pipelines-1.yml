@@ -1,24 +1,24 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
 pool:
- vmImage: ubuntu:latest
+  vmImage: 'ubuntu-latest'
+
+variables:
+  imageName: 'jksoam777/backjk'
+  tag: 'v1'
+
 steps:
 - task: DockerInstaller@0
   inputs:
     dockerVersion: '17.09.0-ce'
+
 - task: Docker@2
+  displayName: 'Build and Push Docker Image'
   inputs:
-    containerRegistry: 'Dockerhub-registry'
-    repository: 'jksoam777/backjk'
+    containerRegistry: 'Dockerhub-registry'   # This should be your service connection name
+    repository: '$(imageName)'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: 'v1'
-
-
-
+    tags: |
+      $(tag)
