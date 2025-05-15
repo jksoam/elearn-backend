@@ -6,7 +6,7 @@ pool:
 
 variables:
   imageName: 'jksoam777/backjk'
-  tag: 'v1'
+  tag: 'v2'
 
 steps:
 - task: DockerInstaller@0
