@@ -41,6 +41,14 @@ steps:
     downloadType: 'single'
     artifactName: 'drop'   # Jo tumne PublishBuildArtifacts mein diya tha
     downloadPath: '$(System.ArtifactsDirectory)'
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'sshConnection'
+    sourceFolder: '$(System.ArtifactsDirectory)/drop'
+    contents: '**'
+    targetFolder: 'elearnbackend'
+    readyTimeout: '20000'
+
 - task: SSH@0
   inputs:
     sshEndpoint: 'sshConnection'
