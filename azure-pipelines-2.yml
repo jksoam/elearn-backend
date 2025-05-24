@@ -1,0 +1,27 @@
+
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.x'
+    includePreviewVersions: true
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'service-jk'
+    command: 'restore'
+    feedsToUse: 'select'
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'service-jk'
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '-c Release -o ./publish'
+
+
