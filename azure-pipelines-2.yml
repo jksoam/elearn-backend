@@ -11,22 +11,28 @@ steps:
     version: '8.0.x'
     includePreviewVersions: true
 
+
 - task: DotNetCoreCLI@2
   inputs:
     azureSubscription: 'service-jk'
     command: 'restore'
     feedsToUse: 'select'
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'service-jk'
+    command: 'build'
+    arguments: '--configuration Release'
 
 - task: DotNetCoreCLI@2
   inputs:
     azureSubscription: 'service-jk'
     command: 'publish'
     publishWebProjects: true
-    arguments: '-c Release -o $(Build.ArtifactStagingDirectory)'
+    arguments: '-c Release -o $(Build.SourcesDirectory)/app'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: '$(Build.SourcesDirectory)/app'
     ArtifactName: 'drop'
     publishLocation: 'Container'
 - task: DownloadBuildArtifacts@0
