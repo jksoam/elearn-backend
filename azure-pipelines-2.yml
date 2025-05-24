@@ -29,3 +29,21 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'current'
+    downloadType: 'single'
+    artifactName: 'drop'   # Jo tumne PublishBuildArtifacts mein diya tha
+    downloadPath: '$(System.ArtifactsDirectory)'
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'sshConnection'
+    runOptions: 'commands'
+    commands: |
+      cd /home/ec2-user/elearnbackend
+      dotnet ElearnBackend.dll &
+    readyTimeout: '20000'
+
+
+
+
