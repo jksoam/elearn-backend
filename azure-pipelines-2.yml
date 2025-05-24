@@ -1,5 +1,3 @@
-
-
 trigger:
 - main
 
@@ -12,21 +10,22 @@ steps:
     packageType: 'sdk'
     version: '8.0.x'
     includePreviewVersions: true
+
 - task: DotNetCoreCLI@2
   inputs:
     azureSubscription: 'service-jk'
     command: 'restore'
     feedsToUse: 'select'
+
 - task: DotNetCoreCLI@2
   inputs:
     azureSubscription: 'service-jk'
     command: 'publish'
     publishWebProjects: true
-    arguments: '-c Release -o ./publish'
+    arguments: '-c Release -o $(Build.ArtifactStagingDirectory)'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
-
