@@ -53,9 +53,7 @@ steps:
   inputs:
     sshEndpoint: 'sshConnection'
     runOptions: 'commands'
-    commands: |
-      cd /home/ec2-user/elearnbackend
-      dotnet ElearnBackend.dll &
+    commands: 'cd /home/ec2-user/elearnbackend && unzip -o s.zip -d ./ && cd s && nohup dotnet ElearnBackend.dll > app.log 2>&1 &'
     readyTimeout: '20000'
 
 
